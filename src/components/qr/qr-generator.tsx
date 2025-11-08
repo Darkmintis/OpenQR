@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Target, Palette, Eye } from 'lucide-react'
+import { Target, Palette, Eye, Download, Share2, Copy, History } from 'lucide-react'
 import Image from 'next/image'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -11,7 +11,6 @@ import { QRExport } from './qr-export'
 import { QRCodeGenerator } from '@/lib/qr-generator'
 import { QRCodeOptions } from '@/types/qr'
 import { useToast } from '@/components/ui/toaster'
-import { Download, Share2, Copy, History } from 'lucide-react'
 
 export function QRGenerator() {
   const [formData, setFormData] = useState<Record<string, string>>({})
@@ -37,7 +36,7 @@ export function QRGenerator() {
   useEffect(() => {
     const generateQR = async () => {
       // Only generate if we have form data
-      if (!formData || !formData.text || formData.text.trim() === '') {
+      if (!formData?.text?.trim()) {
         setQRCodeDataURL('')
         setCapacityUsage(0)
         setErrorMessage('')
@@ -50,7 +49,7 @@ export function QRGenerator() {
         const qrText = formData.text
         
         // Validate QR text
-        if (!qrText || !qrText.trim()) {
+        if (!qrText?.trim()) {
           setQRCodeDataURL('')
           setCapacityUsage(0)
           return
@@ -59,7 +58,7 @@ export function QRGenerator() {
         // Calculate capacity usage
         const usage = QRCodeGenerator.estimateCapacityUsage(
           qrText, 
-          qrOptions.errorCorrectionLevel as 'L' | 'M' | 'Q' | 'H'
+          qrOptions.errorCorrectionLevel
         )
         setCapacityUsage(usage)
 
@@ -94,9 +93,9 @@ export function QRGenerator() {
         
         // Handle specific version error
         if (error instanceof Error && error.message.includes('cannot contain this amount of data')) {
-          const match = error.message.match(/Minimum version required: (\d+)/)
-          if (match) {
-            const minVersion = parseInt(match[1])
+          const matchResult = /Minimum version required: (\d+)/.exec(error.message)
+          if (matchResult) {
+            const minVersion = Number.parseInt(matchResult[1], 10)
             setErrorMessage(`Current QR version is too small. Minimum version ${minVersion} required for this content. Switch to "Auto" or select version ${minVersion} or higher.`)
             toast({
               title: 'Version Too Small',
@@ -191,8 +190,11 @@ export function QRGenerator() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-4">
-              <label className="text-sm font-medium mb-3 block">Enter content for QR code</label>
+              <label htmlFor="qr-content-input" className="text-sm font-medium mb-3 block">
+                Enter content for QR code
+              </label>
               <input 
+                id="qr-content-input"
                 type="text" 
                 placeholder="Enter text, URL, or any content for your QR code" 
                 value={formData.text || ''} 
@@ -210,9 +212,11 @@ export function QRGenerator() {
                   <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
                     <div 
                       className={`h-full ${
-                        capacityUsage > 90 ? 'bg-red-500' : 
-                        capacityUsage > 70 ? 'bg-yellow-500' : 
-                        'bg-green-500'
+                        (() => {
+                          if (capacityUsage > 90) return 'bg-red-500';
+                          if (capacityUsage > 70) return 'bg-yellow-500';
+                          return 'bg-green-500';
+                        })()
                       }`} 
                       style={{ width: `${Math.min(100, capacityUsage)}%` }}
                     ></div>
@@ -228,8 +232,11 @@ export function QRGenerator() {
                 <summary className="text-sm font-medium cursor-pointer">Advanced options</summary>
                 <div className="mt-3 space-y-3 p-3 border border-border rounded-md">
                   <div>
-                    <label className="text-sm font-medium mb-1 block">Error Correction Level</label>
+                    <label htmlFor="error-correction-level" className="text-sm font-medium mb-1 block">
+                      Error Correction Level
+                    </label>
                     <select
+                      id="error-correction-level"
                       value={qrOptions.errorCorrectionLevel}
                       onChange={(e) => setQROptions(prev => ({ 
                         ...prev, 
@@ -248,8 +255,11 @@ export function QRGenerator() {
                   </div>
                   
                   <div>
-                    <label className="text-sm font-medium mb-1 block">QR Code Version (1-40)</label>
+                    <label htmlFor="qr-version" className="text-sm font-medium mb-1 block">
+                      QR Code Version (1-40)
+                    </label>
                     <select
+                      id="qr-version"
                       value={qrOptions.version || ''}
                       onChange={(e) => setQROptions(prev => ({ 
                         ...prev, 

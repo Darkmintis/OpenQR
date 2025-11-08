@@ -83,16 +83,32 @@ export function DonationDialog() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            zIndex: 10000, // Increased z-index to be higher than header
+            zIndex: 10000,
             padding: '1rem'
           }}
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setIsOpen(false)
-            }
-          }}
         >
+          <button
+            type="button"
+            aria-label="Close dialog"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              border: 'none',
+              background: 'transparent',
+              cursor: 'default'
+            }}
+            onClick={() => setIsOpen(false)}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') {
+                setIsOpen(false)
+              }
+            }}
+          />
           <div
+            aria-labelledby="donation-dialog-title"
             style={{
               backgroundColor: 'white',
               borderRadius: '0.5rem',
@@ -101,13 +117,16 @@ export function DonationDialog() {
               maxWidth: '28rem',
               maxHeight: '90vh',
               overflow: 'auto',
-              position: 'relative' // Ensure proper stacking context
+              position: 'relative',
+              zIndex: 10001
             }}
             className="dark:bg-gray-800"
           >
             <div style={{ padding: '1.5rem 1.5rem 0 1.5rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: 0 }}>Support OpenQR Project</h3>
+                <h3 id="donation-dialog-title" style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: 0 }}>
+                  Support OpenQR Project
+                </h3>
                 <button 
                   onClick={() => setIsOpen(false)}
                   style={{

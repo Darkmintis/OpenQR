@@ -1,0 +1,15 @@
+import { MetadataRoute } from 'next'
+
+export const dynamic = 'force-static'
+ 
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: 'OpenQR - The Best QR Code Generator',
+    short_name: 'OpenQR',
+    description: 'Create beautiful, customizable QR codes instantly. Free, open-source, and feature-rich QR code generator.',
+    start_url: '/openqr/',
+    display: 'standalone',
+    background_color: '#ffffff',
+    theme_color: '#4f46e5',
+  }
+}
