@@ -7,16 +7,16 @@ import { Toaster } from '@/components/ui/toaster'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://dipesh-mahat.github.io/OpenQR'),
+  metadataBase: new URL('https://darkmintis.dev/openqr'),
   title: 'OpenQR - The Best QR Code Generator',
   description: 'Create beautiful, customizable QR codes instantly. Free, open-source, and feature-rich QR code generator.',
   keywords: ['QR code', 'QR generator', 'custom QR', 'beautiful QR', 'best QR generator', 'open source'],
-  authors: [{ name: 'Dipesh Mahat' }],
-  creator: 'Dipesh Mahat',
+  authors: [{ name: 'Darkmintis' }],
+  creator: 'Darkmintis',
   openGraph: {
     title: 'OpenQR - The Best QR Code Generator',
     description: 'Create beautiful, customizable QR codes instantly.',
-    url: 'https://dipesh-mahat.github.io/OpenQR',
+    url: 'https://darkmintis.dev/openqr',
     siteName: 'OpenQR',
     locale: 'en_US',
     type: 'website',

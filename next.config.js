@@ -9,8 +9,8 @@ const nextConfig = {
   env: {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },
-  basePath: process.env.GITHUB_ACTIONS && process.env.NODE_ENV === 'production' ? '/OpenQR' : '',
-  trailingSlash: true, // Recommended for GitHub Pages
+  basePath: '',  // Using custom domain darkmintis.dev/openqr
+  trailingSlash: true,
 }
 
 module.exports = nextConfig

@@ -48,7 +48,7 @@ export function Header() {
             </Button>
             
             <a
-              href="https://github.com/Dipesh-Mahat/OpenQR"
+              href="https://github.com/Darkmintis/OpenQR"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
@@ -90,7 +90,7 @@ export function Header() {
                   )}
                 </Button>
                 <a
-                  href="https://github.com/Dipesh-Mahat/OpenQR"
+                  href="https://github.com/Darkmintis/OpenQR"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"

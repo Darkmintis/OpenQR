@@ -30,7 +30,7 @@
 
 1. Clone the repository
 ```bash
-git clone https://github.com/Dipesh-Mahat/OpenQR.git
+git clone https://github.com/Darkmintis/OpenQR.git
 cd OpenQR
 ```
 
@@ -86,7 +86,7 @@ OpenQR is deployed using GitHub Pages for static site hosting. The deployment is
 
 ### Live Demo
 
-You can try the live application here: [https://dipesh-mahat.github.io/OpenQR](https://dipesh-mahat.github.io/OpenQR)
+You can try the live application here: [https://darkmintis.dev/openqr](https://darkmintis.dev/openqr)
 
 ### Deployment Process
 

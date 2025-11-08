@@ -9,12 +9,12 @@ export function Footer() {
           <p className="text-sm text-muted-foreground">
             © 2025 OpenQR. Built by{' '}
             <a 
-              href="https://github.com/Dipesh-Mahat" 
+              href="https://github.com/Darkmintis" 
               target="_blank" 
               rel="noopener noreferrer"
               className="font-medium hover:text-foreground transition-colors"
             >
-              Dipesh Mahat
+              Darkmintis
             </a>
           </p>
           <div className="flex items-center space-x-4 mt-4 md:mt-0">
