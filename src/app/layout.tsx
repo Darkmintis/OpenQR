@@ -27,11 +27,11 @@ export const metadata: Metadata = {
     description: 'Create beautiful, customizable QR codes instantly.',
   },
   icons: {
-    icon: '/OpenQR/favicon.ico',
-    shortcut: '/OpenQR/favicon-16x16.png',
-    apple: '/OpenQR/apple-touch-icon.png',
+    icon: '/favicon.ico',
+    shortcut: '/favicon-16x16.png',
+    apple: '/apple-touch-icon.png',
   },
-  manifest: '/OpenQR/site.webmanifest',
+  manifest: '/site.webmanifest',
 }
 
 export default function RootLayout({
