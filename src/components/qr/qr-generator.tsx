@@ -90,7 +90,6 @@ export function QRGenerator() {
           setHistory(prev => [historyItem, ...prev.slice(0, 9)]) // Keep last 10 items
         }
       } catch (error) {
-        console.error('Error generating QR code:', error)
         setQRCodeDataURL('')
         
         // Handle specific version error
@@ -142,7 +141,6 @@ export function QRGenerator() {
         description: 'QR code copied to clipboard!'
       })
     } catch (error) {
-      console.error('Error copying to clipboard:', error)
       toast({
         title: 'Error',
         description: 'Failed to copy QR code to clipboard.',
@@ -164,7 +162,6 @@ export function QRGenerator() {
           files: [file]
         })
       } catch (error) {
-        console.error('Error sharing:', error)
         handleCopyToClipboard() // Fallback to copy
       }
     } else {

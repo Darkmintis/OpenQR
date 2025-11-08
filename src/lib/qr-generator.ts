@@ -198,7 +198,6 @@ export class QRCodeGenerator {
         return dataURL
       }
     } catch (error) {
-      console.error('Error generating QR code:', error)
       throw new Error('Failed to generate QR code')
     }
   }

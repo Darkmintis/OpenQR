@@ -111,7 +111,6 @@ export function QRSmartConditions({ options, onChange }: QRSmartConditionsProps)
         }
       } catch (error) {
         // Invalid URL, no changes needed
-        console.error('Error parsing smart URL:', error);
       }
     }
   }

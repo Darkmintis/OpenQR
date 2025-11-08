@@ -43,7 +43,6 @@ export function QRExport({ dataURL }: QRExportProps) {
       await QRCodeGenerator.exportQRCode(dataURL, exportOptions, filename)
       // Toast removed as requested
     } catch (error) {
-      console.error('Export error:', error)
       // Only show error toast for failures
       toast({
         title: 'Export Failed',
@@ -73,7 +72,6 @@ export function QRExport({ dataURL }: QRExportProps) {
       await QRCodeGenerator.exportQRCode(dataURL, quickOptions, `qrcode`)
       // Toast removed as requested
     } catch (error) {
-      console.error('Quick export error:', error)
       // Only show error toast for failures
       toast({
         title: 'Download Failed',

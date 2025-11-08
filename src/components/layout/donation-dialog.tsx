@@ -49,7 +49,7 @@ export function DonationDialog() {
       const dataURL = await QRCodeGenerator.generateQRCode(qrOptions)
       setQrCodeDataURL(dataURL)
     } catch (error) {
-      console.error('Error generating QR code:', error)
+      // Error generating QR code
     }
   }
 

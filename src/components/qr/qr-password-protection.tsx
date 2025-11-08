@@ -57,7 +57,7 @@ export function QRPasswordProtection({ options, onChange }: QRPasswordProtection
           originalText = decodedData.substring(decodedData.indexOf(':') + 1);
         }
       } catch (error) {
-        console.error('Error extracting original text:', error);
+        // Error extracting original text
       }
       
       updateOptions({ text: originalText });
