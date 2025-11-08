@@ -56,7 +56,7 @@ export function QRPasswordProtection({ options, onChange }: QRPasswordProtection
           // Extract original content (everything after the first colon)
           originalText = decodedData.substring(decodedData.indexOf(':') + 1);
         }
-      } catch (error) {
+      } catch {
         // Error extracting original text
       }
       

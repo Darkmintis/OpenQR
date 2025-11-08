@@ -197,7 +197,7 @@ export class QRCodeGenerator {
       } else {
         return dataURL
       }
-    } catch (error) {
+    } catch {
       throw new Error('Failed to generate QR code')
     }
   }

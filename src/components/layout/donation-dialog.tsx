@@ -48,7 +48,7 @@ export function DonationDialog() {
       
       const dataURL = await QRCodeGenerator.generateQRCode(qrOptions)
       setQrCodeDataURL(dataURL)
-    } catch (error) {
+    } catch {
       // Error generating QR code
     }
   }

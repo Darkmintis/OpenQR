@@ -140,7 +140,7 @@ export function QRGenerator() {
         title: 'Success',
         description: 'QR code copied to clipboard!'
       })
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to copy QR code to clipboard.',
@@ -161,7 +161,7 @@ export function QRGenerator() {
           text: 'Check out this QR code!',
           files: [file]
         })
-      } catch (error) {
+      } catch {
         handleCopyToClipboard() // Fallback to copy
       }
     } else {

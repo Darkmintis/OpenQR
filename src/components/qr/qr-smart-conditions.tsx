@@ -109,7 +109,7 @@ export function QRSmartConditions({ options, onChange }: QRSmartConditionsProps)
         } else {
           // Not a smart URL, no changes needed
         }
-      } catch (error) {
+      } catch {
         // Invalid URL, no changes needed
       }
     }
