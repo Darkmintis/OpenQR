@@ -78,7 +78,7 @@
             margin-bottom: 8px;
             font-weight: 500;
             font-size: 14px;
-            color: #4b5563;
+            color: #374151;
         }
         .form-group input {
             width: 100%;
@@ -117,20 +117,20 @@
             transform: translateY(0);
         }
         .error {
-            color: #ef4444;
+            color: #7f1d1d;
             font-size: 14px;
             margin-top: 8px;
             display: none;
             padding: 8px 12px;
-            background-color: #fef2f2;
+            background-color: #fca5a5;
             border-radius: 6px;
-            border-left: 3px solid #ef4444;
+            border-left: 3px solid #7f1d1d;
         }
         .footer {
             text-align: center;
             margin-top: 32px;
             font-size: 14px;
-            color: #6b7280;
+            color: #4b5563;
         }
         .footer a {
             color: #4f46e5;
@@ -162,9 +162,9 @@
             color: #9ca3af;
         }
         .dark-mode .error {
-            color: #f87171;
-            background-color: rgba(254, 226, 226, 0.1);
-            border-left-color: #ef4444;
+            color: #fca5a5;
+            background-color: rgba(127, 29, 29, 0.3);
+            border-left-color: #dc2626;
         }
         .loading {
             display: none;
@@ -270,12 +270,12 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Check if user prefers dark mode
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            if (globalThis.matchMedia && globalThis.matchMedia('(prefers-color-scheme: dark)').matches) {
                 document.body.classList.add('dark-mode');
             }
 
             // Listen for dark mode changes
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            globalThis.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
                 if (event.matches) {
                     document.body.classList.add('dark-mode');
                 } else {
@@ -287,12 +287,12 @@
             let encryptedData;
             
             // Check for data in query parameters
-            const urlParams = new URLSearchParams(window.location.search);
+            const urlParams = new URLSearchParams(globalThis.location.search);
             encryptedData = urlParams.get('data');
             
             // If not found, check for data in hash fragment
-            if (!encryptedData && window.location.hash) {
-                encryptedData = window.location.hash.substring(1);
+            if (!encryptedData && globalThis.location.hash) {
+                encryptedData = globalThis.location.hash.substring(1);
             }
             
             if (!encryptedData) {
@@ -324,6 +324,7 @@
                     throw new Error('Invalid data format');
                 }
             } catch (e) {
+                console.error('Error decoding protected data:', e);
                 document.getElementById('content-message').textContent = 'Error: Could not decode the protected data';
                 document.getElementById('password-section').style.display = 'none';
                 document.getElementById('content-section').style.display = 'block';
@@ -376,7 +377,7 @@
                             
                             // Automatically redirect after a short delay
                             setTimeout(() => {
-                                window.location.href = content;
+                                globalThis.location.href = content;
                             }, 2000);
                         } else {
                             contentMessage.textContent = content;
@@ -415,32 +416,33 @@
             passwordInput.addEventListener('input', function() {
                 errorMessage.style.display = 'none';
             });
-
-            // Function to check if string is valid URL
-            function isValidURL(string) {
-                try {
-                    new URL(string);
-                    return true;
-                } catch (_) {
-                    return false;
-                }
-            }
-
-            // SHA-256 hash function
-            async function sha256(message) {
-                // Encode the message
-                const msgBuffer = new TextEncoder().encode(message);
-                
-                // Hash the message
-                const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-                
-                // Convert to hex string
-                const hashArray = Array.from(new Uint8Array(hashBuffer));
-                const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-                
-                return hashHex;
-            }
         });
+
+        // Function to check if string is valid URL
+        function isValidURL(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (error) {
+                console.debug('Invalid URL:', error);
+                return false;
+            }
+        }
+
+        // SHA-256 hash function
+        async function sha256(message) {
+            // Encode the message
+            const msgBuffer = new TextEncoder().encode(message);
+            
+            // Hash the message
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            
+            // Convert to hex string
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            
+            return hashHex;
+        }
     </script>
 </body>
 </html>

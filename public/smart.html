@@ -117,27 +117,133 @@
     </div>
 
     <script>
+        // Icons for different condition types
+        const icons = {
+            time: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`,
+            location: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`,
+            language: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5h12M2 10h12M2 15h12M2 20h12M19 5V2.5a.5.5 0 0 1 1 0V5h1.5a.5.5 0 0 1 0 1H20v1.5a.5.5 0 0 1-1 0V6h-1.5a.5.5 0 0 1 0-1H19zM16 12h6m-3-3v6"></path></svg>`,
+            darkMode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`
+        };
+
+        // Function to check if string is valid URL
+        function isValidURL(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (error) {
+                console.debug('Invalid URL:', error);
+                return false;
+            }
+        }
+
+        // Function to process time-based condition
+        function processTimeCondition(conditions, defaultUrl) {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+            const currentTime = currentHour * 60 + currentMinute;
+            
+            const [startHour, startMinute] = conditions.startTime.split(':').map(Number);
+            const [endHour, endMinute] = conditions.endTime.split(':').map(Number);
+            
+            const startTime = startHour * 60 + startMinute;
+            const endTime = endHour * 60 + endMinute;
+            
+            if (currentTime >= startTime && currentTime <= endTime) {
+                document.getElementById('message').textContent = 'Within business hours. Redirecting...';
+                return conditions.redirectUrl || defaultUrl;
+            }
+            document.getElementById('message').textContent = 'Outside business hours. Redirecting...';
+            return defaultUrl;
+        }
+
+        // Function to process location-based condition
+        function processLocationCondition(conditions, defaultUrl) {
+            const userLanguage = navigator.language || navigator.userLanguage;
+            const userCountry = userLanguage.split('-')[1] || 'US';
+            
+            if (conditions.countries.includes(userCountry)) {
+                document.getElementById('message').textContent = `Location matched (${userCountry}). Redirecting...`;
+                return conditions.redirectUrl || defaultUrl;
+            }
+            document.getElementById('message').textContent = `Location not matched (${userCountry}). Using default. Redirecting...`;
+            return defaultUrl;
+        }
+
+        // Function to process language-based condition
+        function processLanguageCondition(conditions, defaultUrl) {
+            const userLang = navigator.language.split('-')[0] || 'en';
+            
+            if (conditions.languages.includes(userLang) && conditions.redirectUrls[userLang]) {
+                document.getElementById('message').textContent = `Language matched (${userLang}). Redirecting...`;
+                return conditions.redirectUrls[userLang];
+            }
+            document.getElementById('message').textContent = `Language not matched (${userLang}). Using default. Redirecting...`;
+            return defaultUrl;
+        }
+
+        // Function to process dark mode condition
+        function processDarkModeCondition(conditions, defaultUrl) {
+            const isDarkMode = globalThis.matchMedia && globalThis.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (isDarkMode && conditions.darkModeUrl) {
+                document.getElementById('message').textContent = 'Dark mode detected. Redirecting...';
+                return conditions.darkModeUrl;
+            }
+            if (!isDarkMode && conditions.lightModeUrl) {
+                document.getElementById('message').textContent = 'Light mode detected. Redirecting...';
+                return conditions.lightModeUrl;
+            }
+            document.getElementById('message').textContent = 'Mode preference not available. Using default. Redirecting...';
+            return defaultUrl;
+        }
+
+        // Function to determine redirect URL based on condition type
+        function getRedirectUrl(conditionType, conditions, defaultUrl) {
+            switch (conditionType) {
+                case 'time':
+                    return processTimeCondition(conditions, defaultUrl);
+                case 'location':
+                    return processLocationCondition(conditions, defaultUrl);
+                case 'language':
+                    return processLanguageCondition(conditions, defaultUrl);
+                case 'darkMode':
+                    return processDarkModeCondition(conditions, defaultUrl);
+                default:
+                    document.getElementById('message').textContent = 'Unknown condition type. Redirecting to default...';
+                    return defaultUrl;
+            }
+        }
+
+        // Function to show error
+        function showError(message) {
+            document.getElementById('message').textContent = message;
+            document.getElementById('spinner').style.display = 'none';
+        }
+
+        // Function to redirect to URL
+        function redirectToUrl(redirectUrl) {
+            setTimeout(() => {
+                if (isValidURL(redirectUrl)) {
+                    globalThis.location.href = redirectUrl;
+                } else {
+                    showError('Error: Invalid redirect URL');
+                }
+            }, 2000);
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             // Check if user prefers dark mode
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            if (globalThis.matchMedia && globalThis.matchMedia('(prefers-color-scheme: dark)').matches) {
                 document.body.classList.add('dark-mode');
             }
 
-            // Icons for different condition types
-            const icons = {
-                time: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`,
-                location: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`,
-                language: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5h12M2 10h12M2 15h12M2 20h12M19 5V2.5a.5.5 0 0 1 1 0V5h1.5a.5.5 0 0 1 0 1H20v1.5a.5.5 0 0 1-1 0V6h-1.5a.5.5 0 0 1 0-1H19zM16 12h6m-3-3v6"></path></svg>`,
-                darkMode: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`
-            };
-
             // Get the encoded data from URL parameters
-            const urlParams = new URLSearchParams(window.location.search);
+            const urlParams = new URLSearchParams(globalThis.location.search);
             const encodedData = urlParams.get('data');
             
             if (!encodedData) {
-                document.getElementById('message').textContent = 'Error: Missing condition data';
-                document.getElementById('spinner').style.display = 'none';
+                showError('Error: Missing condition data');
                 return;
             }
             
@@ -156,98 +262,12 @@
                 }
                 
                 const conditions = JSON.parse(conditionsJSON);
-                let redirectUrl = defaultUrl;
-                
-                // Process based on condition type
-                switch (conditionType) {
-                    case 'time':
-                        const now = new Date();
-                        const currentHour = now.getHours();
-                        const currentMinute = now.getMinutes();
-                        const currentTime = currentHour * 60 + currentMinute;
-                        
-                        const [startHour, startMinute] = conditions.startTime.split(':').map(Number);
-                        const [endHour, endMinute] = conditions.endTime.split(':').map(Number);
-                        
-                        const startTime = startHour * 60 + startMinute;
-                        const endTime = endHour * 60 + endMinute;
-                        
-                        // Check if current time is within range
-                        if (currentTime >= startTime && currentTime <= endTime) {
-                            redirectUrl = conditions.redirectUrl || defaultUrl;
-                            document.getElementById('message').textContent = 'Within business hours. Redirecting...';
-                        } else {
-                            document.getElementById('message').textContent = 'Outside business hours. Redirecting...';
-                        }
-                        break;
-                        
-                    case 'location':
-                        // Get user's country based on IP (this would require a server-side service)
-                        // For demo, we're using the browser's language as a fallback
-                        const userLanguage = navigator.language || navigator.userLanguage;
-                        const userCountry = userLanguage.split('-')[1] || 'US';
-                        
-                        if (conditions.countries.includes(userCountry)) {
-                            redirectUrl = conditions.redirectUrl || defaultUrl;
-                            document.getElementById('message').textContent = `Location matched (${userCountry}). Redirecting...`;
-                        } else {
-                            document.getElementById('message').textContent = `Location not matched (${userCountry}). Using default. Redirecting...`;
-                        }
-                        break;
-                        
-                    case 'language':
-                        const userLang = navigator.language.split('-')[0] || 'en';
-                        
-                        if (conditions.languages.includes(userLang) && conditions.redirectUrls[userLang]) {
-                            redirectUrl = conditions.redirectUrls[userLang];
-                            document.getElementById('message').textContent = `Language matched (${userLang}). Redirecting...`;
-                        } else {
-                            document.getElementById('message').textContent = `Language not matched (${userLang}). Using default. Redirecting...`;
-                        }
-                        break;
-                        
-                    case 'darkMode':
-                        const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-                        
-                        if (isDarkMode && conditions.darkModeUrl) {
-                            redirectUrl = conditions.darkModeUrl;
-                            document.getElementById('message').textContent = 'Dark mode detected. Redirecting...';
-                        } else if (!isDarkMode && conditions.lightModeUrl) {
-                            redirectUrl = conditions.lightModeUrl;
-                            document.getElementById('message').textContent = 'Light mode detected. Redirecting...';
-                        } else {
-                            document.getElementById('message').textContent = 'Mode preference not available. Using default. Redirecting...';
-                        }
-                        break;
-                        
-                    default:
-                        document.getElementById('message').textContent = 'Unknown condition type. Redirecting to default...';
-                }
-                
-                // Redirect after a short delay
-                setTimeout(() => {
-                    if (isValidURL(redirectUrl)) {
-                        window.location.href = redirectUrl;
-                    } else {
-                        document.getElementById('message').textContent = 'Error: Invalid redirect URL';
-                        document.getElementById('spinner').style.display = 'none';
-                    }
-                }, 2000);
+                const redirectUrl = getRedirectUrl(conditionType, conditions, defaultUrl);
+                redirectToUrl(redirectUrl);
                 
             } catch (error) {
                 console.error('Error processing smart QR code:', error);
-                document.getElementById('message').textContent = 'Error: Could not process the QR code data';
-                document.getElementById('spinner').style.display = 'none';
-            }
-            
-            // Function to check if string is valid URL
-            function isValidURL(string) {
-                try {
-                    new URL(string);
-                    return true;
-                } catch (_) {
-                    return false;
-                }
+                showError('Error: Could not process the QR code data');
             }
         });
     </script>
