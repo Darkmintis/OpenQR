@@ -34,7 +34,7 @@
     "@types/qrcode": "^1.5.6",
     "@types/react": "^18.2.25",
     "@types/react-dom": "^18.2.10",
-    "autoprefixer": "^10.4.16",
+    "autoprefixer": "^10.4.23",
     "eslint": "^8.50.0",
     "eslint-config-next": "^14.0.0",
     "postcss": "^8.4.31",
