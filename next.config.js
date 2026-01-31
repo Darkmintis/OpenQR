@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production'
+
 const nextConfig = {
   output: 'export',  // Enable static exports
   images: {
@@ -9,9 +11,9 @@ const nextConfig = {
   env: {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },
-  // Base path for subdirectory deployment on darkmintis.dev
-  basePath: '/openqr',
-  assetPrefix: '/openqr',
+  // Base path for subdirectory deployment on darkmintis.dev (only in production)
+  basePath: isProd ? '/openqr' : '',
+  assetPrefix: isProd ? '/openqr' : '',
   trailingSlash: true,
 }
 
