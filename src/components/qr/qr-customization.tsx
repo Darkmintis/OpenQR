@@ -167,7 +167,10 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="qr-size" className="text-sm font-medium block mb-2">Size (px)</label>
+                  <div className="flex items-center justify-between mb-3">
+                    <label htmlFor="qr-size" className="text-sm font-medium">Size</label>
+                    <span className="text-sm font-semibold text-primary">{options.size}px</span>
+                  </div>
                   <Input
                     id="qr-size"
                     type="range"
@@ -177,13 +180,17 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
                     onChange={(e) => updateOptions({ size: Number.parseInt(e.target.value) })}
                     className="w-full"
                   />
-                  <div className="text-center text-sm text-muted-foreground mt-1">
-                    {options.size}px
+                  <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                    <span>100px</span>
+                    <span>800px</span>
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="qr-margin" className="text-sm font-medium block mb-2">Margin</label>
+                  <div className="flex items-center justify-between mb-3">
+                    <label htmlFor="qr-margin" className="text-sm font-medium">Margin</label>
+                    <span className="text-sm font-semibold text-primary">{options.margin}</span>
+                  </div>
                   <Input
                     id="qr-margin"
                     type="range"
@@ -193,8 +200,9 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
                     onChange={(e) => updateOptions({ margin: Number.parseInt(e.target.value) })}
                     className="w-full"
                   />
-                  <div className="text-center text-sm text-muted-foreground mt-1">
-                    {options.margin}
+                  <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                    <span>0</span>
+                    <span>10</span>
                   </div>
                 </div>
               </div>
