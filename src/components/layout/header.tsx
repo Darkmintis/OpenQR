@@ -19,7 +19,7 @@ export function Header() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <QrCode className="h-8 w-8 text-blue-600 dark:text-blue-500" />
+            <QrCode className="h-10 w-10 text-blue-600 dark:text-blue-500" />
           </div>
 
           {/* Desktop Navigation */}
@@ -36,9 +36,9 @@ export function Header() {
               className="hidden sm:flex"
             >
               {theme === 'dark' ? (
-                <Sun className="h-4 w-4" />
+                <Sun className="h-5 w-5" />
               ) : (
-                <Moon className="h-4 w-4" />
+                <Moon className="h-5 w-5" />
               )}
             </Button>
             
@@ -48,7 +48,7 @@ export function Header() {
               rel="noopener noreferrer"
               className="inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
             >
-              <Github className="h-4 w-4" />
+              <Github className="h-5 w-5" />
             </a>
 
             {/* Mobile Menu Button */}
