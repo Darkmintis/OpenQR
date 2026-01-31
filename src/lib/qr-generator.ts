@@ -1,5 +1,5 @@
 import QRCodeLib from 'qrcode'
-import { QRCodeOptions, ExportOptions } from '@/types/qr'
+import { QRCodeOptions, ExportOptions, ErrorCorrectionLevel } from '@/types/qr'
 
 // Define proper TypeScript types for the QRCodeLib methods
 type QRLibOptions = Record<string, unknown>;
@@ -199,13 +199,6 @@ export class QRCodeGenerator {
       qrOptions.version = minRequiredVersion
     }
 
-    console.log('QR Generation:', { 
-      textLength: options.text.length, 
-      minVersion: minRequiredVersion, 
-      selectedVersion: qrOptions.version,
-      errorLevel: options.errorCorrectionLevel 
-    })
-
     try {
       // Generate QR code as data URL
       let dataURL = await QRCodeLib.toDataURL(options.text, qrOptions as unknown as QRLibOptions)
@@ -307,7 +300,6 @@ export class QRCodeGenerator {
         const versionMatch = /Minimum version required.*?(\d+)/.exec(errorMessage)
         if (versionMatch) {
           const requiredVersion = Number.parseInt(versionMatch[1], 10)
-          console.log(`Auto-retry with version ${requiredVersion} (library-suggested)`)
           // Retry with the library's suggested version
           return this.generateQRCode({ ...options, version: requiredVersion })
         }
