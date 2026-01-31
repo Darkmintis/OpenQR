@@ -6,9 +6,7 @@ import { QRCodeOptions } from '@/types/qr'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Palette, Settings, ImageIcon, Frame, Sparkles } from 'lucide-react'
-import { QRSmartConditions } from './qr-smart-conditions'
-import { QRPasswordProtection } from './qr-password-protection'
+import { Palette, Settings, ImageIcon, Frame } from 'lucide-react'
 
 interface QRCustomizationProps {
   options: QRCodeOptions
@@ -16,7 +14,7 @@ interface QRCustomizationProps {
 }
 
 export function QRCustomization({ options, onChange }: QRCustomizationProps) {
-  const [activeTab, setActiveTab] = useState<'colors' | 'style' | 'logo' | 'frame' | 'advanced'>('colors')
+  const [activeTab, setActiveTab] = useState<'colors' | 'style' | 'logo' | 'frame'>('colors')
 
   const updateOptions = (updates: Partial<QRCodeOptions>) => {
     onChange({ ...options, ...updates })
@@ -64,7 +62,6 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
     { id: 'style', label: 'Style', icon: Settings },
     { id: 'logo', label: 'Logo', icon: ImageIcon },
     { id: 'frame', label: 'Frame', icon: Frame },
-    { id: 'advanced', label: 'Advanced', icon: Sparkles },
   ] as const
 
   return (
@@ -380,20 +377,6 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
             </div>
           )}
           
-          {activeTab === 'advanced' && (
-            <div className="space-y-8">
-              <QRSmartConditions options={options} onChange={onChange} />
-              
-              <div className="border-t pt-8">
-                <QRPasswordProtection options={options} onChange={onChange} />
-              </div>
-              
-              <div className="rounded-md bg-yellow-50 dark:bg-yellow-950 p-3 text-xs text-yellow-700 dark:text-yellow-300">
-                <p className="font-medium mb-1">Advanced Features:</p>
-                <p>These exclusive features make your QR codes truly special. Note that some advanced features may not be supported by all QR code scanners.</p>
-              </div>
-            </div>
-          )}
         </CardContent>
       </Card>
     </div>
