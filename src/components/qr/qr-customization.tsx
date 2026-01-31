@@ -228,30 +228,7 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
 
           {activeTab === 'logo' && (
             <div className="space-y-4">
-              {!options.logoUrl ? (
-                <div className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-border rounded-lg hover:border-primary transition-colors">
-                  <ImageIcon className="w-12 h-12 text-muted-foreground mb-3" />
-                  <Input
-                    id="logo-upload"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleLogoUpload}
-                    className="hidden"
-                  />
-                  <Button 
-                    variant="default" 
-                    size="sm" 
-                    className="mb-2"
-                    onClick={() => document.getElementById('logo-upload')?.click()}
-                  >
-                    Choose Logo File
-                  </Button>
-                  <p className="text-xs text-muted-foreground text-center">
-                    Upload a logo to embed in your QR code<br />
-                    PNG, JPG, or SVG (max 5MB)
-                  </p>
-                </div>
-              ) : (
+              {options.logoUrl ? (
                 <div className="space-y-4">
                   <div className="flex items-start gap-3 p-4 border rounded-lg bg-muted/30">
                     <Image
@@ -263,7 +240,7 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
                     />
                     <div className="flex-1 space-y-2">
                       <div>
-                        <label className="text-xs font-medium block mb-2">Shape</label>
+                        <div className="text-xs font-medium block mb-2">Shape</div>
                         <div className="flex gap-2">
                           <Button
                             variant={(!options.logoShape || options.logoShape === 'circle') ? 'default' : 'outline'}
@@ -317,6 +294,29 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
                       <span>{Math.round(options.size * 0.25)}px</span>
                     </div>
                   </div>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-border rounded-lg hover:border-primary transition-colors">
+                  <ImageIcon className="w-12 h-12 text-muted-foreground mb-3" />
+                  <Input
+                    id="logo-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleLogoUpload}
+                    className="hidden"
+                  />
+                  <Button 
+                    variant="default" 
+                    size="sm" 
+                    className="mb-2"
+                    onClick={() => document.getElementById('logo-upload')?.click()}
+                  >
+                    Choose Logo File
+                  </Button>
+                  <p className="text-xs text-muted-foreground text-center">
+                    Upload a logo to embed in your QR code<br />
+                    PNG, JPG, or SVG (max 5MB)
+                  </p>
                 </div>
               )}
             </div>

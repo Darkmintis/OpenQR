@@ -47,14 +47,14 @@ export class QRCodeGenerator {
   }
 
   // Estimate remaining capacity as a percentage
-  static estimateCapacityUsage(text: string, errorLevel: 'L' | 'M' | 'Q' | 'H'): number {
+  static estimateCapacityUsage(text: string, errorLevel: ErrorCorrectionLevel): number {
     const mode = this.getEncodingMode(text)
     const maxCapacity = this.CAPACITY_MAP[errorLevel][mode]
     return Math.min(100, (text.length / maxCapacity) * 100)
   }
 
   // Get minimum required version for the given text and error correction level
-  static getMinimumVersion(text: string, errorLevel: 'L' | 'M' | 'Q' | 'H'): number {
+  static getMinimumVersion(text: string, errorLevel: ErrorCorrectionLevel): number {
     const mode = this.getEncodingMode(text)
     const textLength = text.length
     
@@ -453,7 +453,7 @@ export class QRCodeGenerator {
     a.download = filename
     document.body.appendChild(a)
     a.click()
-    document.body.removeChild(a)
+    a.remove()
     URL.revokeObjectURL(url)
   }
 }

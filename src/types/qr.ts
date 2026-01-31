@@ -1,8 +1,10 @@
+export type ErrorCorrectionLevel = 'L' | 'M' | 'Q' | 'H'
+
 export interface QRCodeOptions {
   text: string
   size: number
   margin: number
-  errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H'
+  errorCorrectionLevel: ErrorCorrectionLevel
   version?: number // QR Code version (1-40), higher values store more data
   foregroundColor: string
   backgroundColor: string

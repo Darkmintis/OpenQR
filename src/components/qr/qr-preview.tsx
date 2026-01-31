@@ -2,13 +2,12 @@
 
 import Image from 'next/image'
 import { QRCodeOptions } from '@/types/qr'
-import { cn } from '@/lib/utils'
 import { Loader2, Smartphone } from 'lucide-react'
 
 interface QRPreviewProps {
-  dataURL: string
-  isGenerating: boolean
-  options: QRCodeOptions
+  readonly dataURL: string
+  readonly isGenerating: boolean
+  readonly options: QRCodeOptions
 }
 
 export function QRPreview({ dataURL, isGenerating, options }: QRPreviewProps) {
