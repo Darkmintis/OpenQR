@@ -42,8 +42,8 @@ export default function PrivacyPolicy() {
         <h2 className="text-2xl font-semibold mt-8 mb-4">Third-Party Services</h2>
         <p>
           Our application is hosted on GitHub Pages, which may collect standard server logs including IP addresses and browser information.
-          This is not within our control, but GitHub does not share this information with us. For more information, please refer to 
-          <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer"> GitHub&apos;s Privacy Statement</a>.
+          This is not within our control, but GitHub does not share this information with us. For more information, please refer to{' '}
+          <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">GitHub&apos;s Privacy Statement</a>.
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Security</h2>

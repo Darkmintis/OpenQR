@@ -9,8 +9,8 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Palette, Settings, ImageIcon, Frame } from 'lucide-react'
 
 interface QRCustomizationProps {
-  options: QRCodeOptions
-  onChange: (options: QRCodeOptions) => void
+  readonly options: QRCodeOptions
+  readonly onChange: (options: QRCodeOptions) => void
 }
 
 export function QRCustomization({ options, onChange }: QRCustomizationProps) {
@@ -170,7 +170,7 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
                     min="100"
                     max="800"
                     value={options.size}
-                    onChange={(e) => updateOptions({ size: parseInt(e.target.value) })}
+                    onChange={(e) => updateOptions({ size: Number.parseInt(e.target.value) })}
                     className="w-full"
                   />
                   <div className="text-center text-sm text-muted-foreground mt-1">
@@ -185,7 +185,7 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
                     min="0"
                     max="10"
                     value={options.margin}
-                    onChange={(e) => updateOptions({ margin: parseInt(e.target.value) })}
+                    onChange={(e) => updateOptions({ margin: Number.parseInt(e.target.value) })}
                     className="w-full"
                   />
                   <div className="text-center text-sm text-muted-foreground mt-1">
@@ -235,7 +235,7 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
                     min="20"
                     max={options.size * 0.4}
                     value={options.logoSize || options.size * 0.2}
-                    onChange={(e) => updateOptions({ logoSize: parseInt(e.target.value) })}
+                    onChange={(e) => updateOptions({ logoSize: Number.parseInt(e.target.value) })}
                     className="w-full"
                   />
                   <div className="text-center text-sm text-muted-foreground mt-1">

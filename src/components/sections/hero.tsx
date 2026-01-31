@@ -16,12 +16,6 @@ export function Hero() {
             </span>
           </h1>
 
-          {/* Subtitle */}
-          <p className="text-xl text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Create professional QR codes with custom colors, logos, and beautiful designs.
-            Fast, free, and no sign-up required.
-          </p>
-
           {/* Features List */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 max-w-2xl mx-auto">
             <div className="flex items-center justify-center gap-2 text-sm">
