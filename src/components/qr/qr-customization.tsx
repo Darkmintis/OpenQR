@@ -46,6 +46,8 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
     { name: 'Sunset', fg: '#be185d', bg: '#ffe4e6' },
     { name: 'Forest', fg: '#166534', bg: '#d1fae5' },
     { name: 'Midnight', fg: '#312e81', bg: '#e0e7ff' },
+    { name: 'Lavender', fg: '#6b21a8', bg: '#f3e8ff' },
+    { name: 'Crimson', fg: '#be123c', bg: '#ffe4e6' },
   ]
 
   const tabs = [
@@ -81,7 +83,6 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
         <CardContent className="pt-4 px-3">
           {activeTab === 'colors' && (
             <div className="space-y-3">
-              <h4 className="text-sm font-medium mb-1">Solid Colors</h4>
               <div className="grid grid-cols-3 gap-1">
                 {presetColors.map((preset) => (
                   <Button

@@ -337,6 +337,39 @@ export function QRGenerator() {
             />
           </CardContent>
         </Card>
+
+        {history.length > 0 && (
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center gap-2">
+                <History className="w-5 h-5" />
+                Recent QR Codes
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-2">
+                {history.slice(0, 4).map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => loadFromHistory(item)}
+                    className="p-2 border rounded-lg hover:bg-accent transition-colors"
+                  >
+                    <Image
+                      src={item.dataURL}
+                      alt="QR Code"
+                      width={80}
+                      height={80}
+                      className="w-full h-20 object-contain"
+                    />
+                    <p className="text-xs text-muted-foreground mt-1 truncate">
+                      {item.text.length > 20 ? item.text.substring(0, 20) + '...' : item.text}
+                    </p>
+                  </button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       {/* Right Panel - Preview and Export */}
@@ -392,39 +425,6 @@ export function QRGenerator() {
               <QRExport
                 dataURL={qrCodeDataURL}
               />
-            </CardContent>
-          </Card>
-        )}
-
-        {history.length > 0 && (
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2">
-                <History className="w-5 h-5" />
-                Recent QR Codes
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-2">
-                {history.slice(0, 4).map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => loadFromHistory(item)}
-                    className="p-2 border rounded-lg hover:bg-accent transition-colors"
-                  >
-                    <Image
-                      src={item.dataURL}
-                      alt="QR Code"
-                      width={80}
-                      height={80}
-                      className="w-full h-20 object-contain"
-                    />
-                    <p className="text-xs text-muted-foreground mt-1 truncate">
-                      {item.text.length > 20 ? item.text.substring(0, 20) + '...' : item.text}
-                    </p>
-                  </button>
-                ))}
-              </div>
             </CardContent>
           </Card>
         )}
