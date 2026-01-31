@@ -47,15 +47,6 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
     { name: 'Forest', fg: '#166534', bg: '#d1fae5' },
     { name: 'Midnight', fg: '#312e81', bg: '#e0e7ff' },
   ]
-  
-  const gradientPresets = [
-    { name: 'Oceanic', colors: ['#0891b2', '#3b82f6'], type: 'linear', rotation: 45 },
-    { name: 'Sunset', colors: ['#f97316', '#db2777'], type: 'linear', rotation: 135 },
-    { name: 'Forest', colors: ['#16a34a', '#065f46'], type: 'linear', rotation: 90 },
-    { name: 'Twilight', colors: ['#7c3aed', '#db2777'], type: 'radial', rotation: 0 },
-    { name: 'Fire', colors: ['#dc2626', '#f97316'], type: 'linear', rotation: 180 },
-    { name: 'Berry', colors: ['#be185d', '#7c3aed'], type: 'linear', rotation: 225 },
-  ]
 
   const tabs = [
     { id: 'colors', label: 'Colors', icon: Palette },
@@ -113,39 +104,6 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
                         style={{ backgroundColor: preset.bg }}
                       />
                     </div>
-                    <span className="text-xs">{preset.name}</span>
-                  </Button>
-                ))}
-              </div>
-              
-              <h4 className="text-sm font-medium mb-1 mt-2">Gradient Presets</h4>
-              <div className="grid grid-cols-3 gap-1">
-                {gradientPresets.map((preset) => (
-                  <Button
-                    key={preset.name}
-                    variant="outline"
-                    className="h-auto p-1 flex flex-col items-center gap-1"
-                    onClick={() => updateOptions({
-                      foregroundColor: preset.colors[0],
-                      backgroundColor: '#ffffff',
-                      gradient: {
-                        type: preset.type as 'linear' | 'radial',
-                        rotation: preset.rotation,
-                        colorStops: [
-                          { offset: 0, color: preset.colors[0] },
-                          { offset: 1, color: preset.colors[1] }
-                        ]
-                      }
-                    })}
-                  >
-                    <div 
-                      className="w-8 h-8 rounded"
-                      style={{ 
-                        background: preset.type === 'linear' 
-                          ? `linear-gradient(${preset.rotation}deg, ${preset.colors[0]}, ${preset.colors[1]})` 
-                          : `radial-gradient(circle, ${preset.colors[0]}, ${preset.colors[1]})`
-                      }}
-                    />
                     <span className="text-xs">{preset.name}</span>
                   </Button>
                 ))}
