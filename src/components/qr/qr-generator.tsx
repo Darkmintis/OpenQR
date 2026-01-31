@@ -125,12 +125,12 @@ export function QRGenerator() {
           const errorMsg = error instanceof Error ? error.message : 'Unknown error'
           console.warn('Auto mode generation failed:', errorMsg, error)
           
-          // Only show user-facing error for truly exceptional cases
-          if (errorMsg.includes('too large') || errorMsg.includes('exceed')) {
-            setErrorMessage('Content exceeds maximum QR code capacity.')
+          // Check if it's a capacity issue
+          if (errorMsg.includes('too big') || errorMsg.includes('too large') || errorMsg.includes('exceed')) {
+            setErrorMessage('Content exceeds maximum QR code capacity. Try reducing content size or using lower error correction (L).')
             toast({
               title: 'Content Too Large',
-              description: 'Your content exceeds the maximum QR code capacity (Version 40 limit).',
+              description: 'Your content is too large for QR code (Version 40 limit). Reduce content size or use Error Correction Level "L".',
               variant: 'destructive'
             })
           } else {
