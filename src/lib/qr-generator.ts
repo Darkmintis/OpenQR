@@ -97,6 +97,61 @@ export class QRCodeGenerator {
     return 40
   }
 
+  // Apply rounded/circular styling to QR modules
+  static applyModuleStyle(canvas: HTMLCanvasElement, frameStyle?: 'square' | 'rounded' | 'circle' | 'banner'): HTMLCanvasElement {
+    if (!frameStyle || frameStyle === 'square' || frameStyle === 'banner') {
+      return canvas // No style changes needed
+    }
+
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return canvas
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+    const data = imageData.data
+    
+    // Create a new canvas for styled output
+    const styledCanvas = document.createElement('canvas')
+    styledCanvas.width = canvas.width
+    styledCanvas.height = canvas.height
+    const styledCtx = styledCanvas.getContext('2d')
+    if (!styledCtx) return canvas
+
+    // Fill background
+    const bgColor = ctx.getImageData(0, 0, 1, 1).data
+    styledCtx.fillStyle = `rgb(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]})`
+    styledCtx.fillRect(0, 0, canvas.width, canvas.height)
+
+    // Detect module size (approximate)
+    const moduleSize = Math.floor(canvas.width / 45) // Rough estimate for QR modules
+    const radius = frameStyle === 'circle' ? moduleSize / 2 : moduleSize / 4
+
+    // Draw styled modules
+    for (let y = 0; y < canvas.height; y += moduleSize) {
+      for (let x = 0; x < canvas.width; x += moduleSize) {
+        const i = (y * canvas.width + x) * 4
+        const isDark = data[i] < 128 // Check if pixel is dark
+        
+        if (isDark) {
+          styledCtx.fillStyle = `rgb(${data[i]}, ${data[i + 1]}, ${data[i + 2]})`
+          
+          if (frameStyle === 'circle') {
+            // Draw circular modules
+            styledCtx.beginPath()
+            styledCtx.arc(x + moduleSize / 2, y + moduleSize / 2, radius, 0, Math.PI * 2)
+            styledCtx.fill()
+          } else if (frameStyle === 'rounded') {
+            // Draw rounded square modules
+            styledCtx.beginPath()
+            styledCtx.roundRect(x, y, moduleSize, moduleSize, radius)
+            styledCtx.fill()
+          }
+        }
+      }
+    }
+
+    return styledCanvas
+  }
+
   static async generateQRCode(options: QRCodeOptions): Promise<string> {
     interface QROptions {
       errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H';
@@ -141,13 +196,35 @@ export class QRCodeGenerator {
 
     try {
       // Generate QR code as data URL
-      const dataURL = await QRCodeLib.toDataURL(options.text, qrOptions as unknown as QRLibOptions)
+      let dataURL = await QRCodeLib.toDataURL(options.text, qrOptions as unknown as QRLibOptions)
       
       if (!dataURL) {
         throw new Error('QR generation returned empty result')
       }
+
+      // Apply module styling for frames
+      if (options.frame?.style && (options.frame.style === 'circle' || options.frame.style === 'rounded')) {
+        const tempCanvas = document.createElement('canvas')
+        const tempCtx = tempCanvas.getContext('2d')
+        if (tempCtx) {
+          tempCanvas.width = options.size
+          tempCanvas.height = options.size
+          
+          const img = new Image()
+          await new Promise<void>((resolve, reject) => {
+            img.onload = () => {
+              tempCtx.drawImage(img, 0, 0)
+              const styledCanvas = this.applyModuleStyle(tempCanvas, options.frame?.style)
+              dataURL = styledCanvas.toDataURL()
+              resolve()
+            }
+            img.onerror = reject
+            img.src = dataURL
+          })
+        }
+      }
       
-      // If no gradient is set, return the basic QR code
+      // If no gradient is set, return the QR code (with styling applied)
       if (!options.gradient) {
         return dataURL
       }
@@ -258,13 +335,37 @@ export class QRCodeGenerator {
             const x = (options.size - logoSize) / 2
             const y = (options.size - logoSize) / 2
 
-            // Add white background padding for logo (clear the QR code area)
-            const padding = logoSize * 0.1
-            ctx.fillStyle = '#ffffff'
-            ctx.fillRect(x - padding, y - padding, logoSize + (padding * 2), logoSize + (padding * 2))
+            // Create proper space for logo with better padding
+            const padding = logoSize * 0.15
+            const bgSize = logoSize + (padding * 2)
+            const bgX = (options.size - bgSize) / 2
+            const bgY = (options.size - bgSize) / 2
+            const cornerRadius = bgSize * 0.15
 
-            // Draw logo
+            // Draw rounded white background for logo
+            ctx.fillStyle = options.backgroundColor || '#ffffff'
+            ctx.beginPath()
+            ctx.roundRect(bgX, bgY, bgSize, bgSize, cornerRadius)
+            ctx.fill()
+
+            // Add subtle shadow for depth
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.1)'
+            ctx.shadowBlur = 8
+            ctx.shadowOffsetX = 0
+            ctx.shadowOffsetY = 2
+
+            // Draw logo with rounded corners
+            ctx.save()
+            ctx.beginPath()
+            ctx.roundRect(x, y, logoSize, logoSize, logoSize * 0.1)
+            ctx.clip()
             ctx.drawImage(logo, x, y, logoSize, logoSize)
+            ctx.restore()
+
+            // Reset shadow
+            ctx.shadowColor = 'transparent'
+            ctx.shadowBlur = 0
+
             resolve(canvas.toDataURL('image/png'))
           }
           logo.onerror = () => resolve(canvas.toDataURL('image/png'))
