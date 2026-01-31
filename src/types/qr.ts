@@ -10,17 +10,13 @@ export interface QRCodeOptions {
   logoSize?: number
   cornerSquareStyle: 'square' | 'dot' | 'extra-rounded'
   cornerDotStyle: 'square' | 'dot'
-  pattern?: string
+  pattern?: {
+    style: 'square' | 'rounded' | 'circle'
+  }
   gradient?: {
     type: 'linear' | 'radial'
     rotation: number
     colorStops: Array<{ offset: number; color: string }>
-  }
-  frame?: {
-    style: 'square' | 'rounded' | 'circle' | 'banner'
-    color: string
-    text?: string
-    textColor?: string
   }
 }
 

@@ -41,15 +41,8 @@ export function QRPreview({ dataURL, isGenerating, options }: QRPreviewProps) {
   return (
     <div className="flex items-center justify-center p-8">
       <div 
-        className={cn(
-          "qr-preview p-4 rounded-lg shadow-lg",
-          options.frame && "border-4",
-          options.frame?.style === 'rounded' && "rounded-xl",
-          options.frame?.style === 'circle' && "rounded-full",
-          "bg-white"
-        )}
+        className="qr-preview p-4 rounded-lg shadow-lg bg-white"
         style={{
-          borderColor: options.frame?.color,
           backgroundColor: options.backgroundColor
         }}
       >
@@ -60,14 +53,6 @@ export function QRPreview({ dataURL, isGenerating, options }: QRPreviewProps) {
           height={options.size}
           className="max-w-full h-auto"
         />
-        {options.frame?.text && (
-          <div 
-            className="text-center mt-2 font-semibold text-sm"
-            style={{ color: options.frame.textColor || '#000000' }}
-          >
-            {options.frame.text}
-          </div>
-        )}
       </div>
     </div>
   )

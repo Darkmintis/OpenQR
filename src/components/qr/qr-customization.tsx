@@ -6,7 +6,7 @@ import { QRCodeOptions } from '@/types/qr'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Palette, Settings, ImageIcon, Frame } from 'lucide-react'
+import { Palette, Settings, ImageIcon, Shapes } from 'lucide-react'
 
 interface QRCustomizationProps {
   readonly options: QRCodeOptions
@@ -14,7 +14,7 @@ interface QRCustomizationProps {
 }
 
 export function QRCustomization({ options, onChange }: QRCustomizationProps) {
-  const [activeTab, setActiveTab] = useState<'colors' | 'style' | 'logo' | 'frame'>('colors')
+  const [activeTab, setActiveTab] = useState<'colors' | 'style' | 'logo' | 'pattern'>('colors')
 
   const updateOptions = (updates: Partial<QRCodeOptions>) => {
     onChange({ ...options, ...updates })
@@ -52,7 +52,7 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
     { id: 'colors', label: 'Colors', icon: Palette },
     { id: 'style', label: 'Style', icon: Settings },
     { id: 'logo', label: 'Logo', icon: ImageIcon },
-    { id: 'frame', label: 'Frame', icon: Frame },
+    { id: 'pattern', label: 'Pattern', icon: Shapes },
   ] as const
 
   return (
@@ -273,75 +273,36 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
             </div>
           )}
 
-          {activeTab === 'frame' && (
+          {activeTab === 'pattern' && (
             <div className="space-y-4">
               <div>
-                <div className="text-sm font-medium block mb-2">Frame Style</div>
-                <div className="grid grid-cols-2 gap-2">
-                  {['none', 'square', 'rounded', 'circle'].map((style) => (
+                <div className="text-sm font-medium block mb-2">QR Code Pattern Style</div>
+                <p className="text-xs text-muted-foreground mb-3">
+                  Choose the shape of QR code dots/modules
+                </p>
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { value: 'square', label: 'Square', desc: 'Classic' },
+                    { value: 'rounded', label: 'Rounded', desc: 'Modern' },
+                    { value: 'circle', label: 'Circle', desc: 'Organic' }
+                  ].map((style) => (
                     <Button
-                      key={style}
-                      variant={options.frame?.style === style ? 'default' : 'outline'}
+                      key={style.value}
+                      variant={options.pattern?.style === style.value || (!options.pattern && style.value === 'square') ? 'default' : 'outline'}
                       size="sm"
                       onClick={() => updateOptions({ 
-                        frame: style === 'none' ? undefined : { 
-                          ...options.frame,
-                          style: style as 'square' | 'rounded' | 'circle' | 'banner',
-                          color: options.frame?.color || '#000000'
+                        pattern: style.value === 'square' ? undefined : { 
+                          style: style.value as 'square' | 'rounded' | 'circle'
                         }
                       })}
-                      className="capitalize"
+                      className="flex flex-col h-auto py-3"
                     >
-                      {style}
+                      <span className="font-medium">{style.label}</span>
+                      <span className="text-xs opacity-70">{style.desc}</span>
                     </Button>
                   ))}
                 </div>
               </div>
-
-              {options.frame && (
-                <>
-                  <div>
-                    <label htmlFor="frame-color" className="text-sm font-medium block mb-2">Frame Color</label>
-                    <Input
-                      id="frame-color"
-                      type="color"
-                      value={options.frame.color}
-                      onChange={(e) => updateOptions({
-                        frame: { ...options.frame!, color: e.target.value }
-                      })}
-                      className="w-full h-10"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="frame-text" className="text-sm font-medium block mb-2">Frame Text (Optional)</label>
-                    <Input
-                      id="frame-text"
-                      type="text"
-                      value={options.frame.text || ''}
-                      onChange={(e) => updateOptions({
-                        frame: { ...options.frame!, text: e.target.value }
-                      })}
-                      placeholder="Scan me!"
-                    />
-                  </div>
-
-                  {options.frame.text && (
-                    <div>
-                      <label htmlFor="frame-text-color" className="text-sm font-medium block mb-2">Text Color</label>
-                      <Input
-                        id="frame-text-color"
-                        type="color"
-                        value={options.frame.textColor || '#000000'}
-                        onChange={(e) => updateOptions({
-                          frame: { ...options.frame!, textColor: e.target.value }
-                        })}
-                        className="w-full h-10"
-                      />
-                    </div>
-                  )}
-                </>
-              )}
             </div>
           )}
           

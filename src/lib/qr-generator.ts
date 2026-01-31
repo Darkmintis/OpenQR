@@ -98,8 +98,8 @@ export class QRCodeGenerator {
   }
 
   // Apply rounded/circular styling to QR modules
-  static applyModuleStyle(canvas: HTMLCanvasElement, frameStyle?: 'square' | 'rounded' | 'circle' | 'banner'): HTMLCanvasElement {
-    if (!frameStyle || frameStyle === 'square' || frameStyle === 'banner') {
+  static applyModuleStyle(canvas: HTMLCanvasElement, patternStyle?: 'square' | 'rounded' | 'circle'): HTMLCanvasElement {
+    if (!patternStyle || patternStyle === 'square') {
       return canvas // No style changes needed
     }
 
@@ -123,7 +123,7 @@ export class QRCodeGenerator {
 
     // Detect module size (approximate)
     const moduleSize = Math.floor(canvas.width / 45) // Rough estimate for QR modules
-    const radius = frameStyle === 'circle' ? moduleSize / 2 : moduleSize / 4
+    const radius = patternStyle === 'circle' ? moduleSize / 2 : moduleSize / 4
 
     // Draw styled modules
     for (let y = 0; y < canvas.height; y += moduleSize) {
@@ -134,12 +134,12 @@ export class QRCodeGenerator {
         if (isDark) {
           styledCtx.fillStyle = `rgb(${data[i]}, ${data[i + 1]}, ${data[i + 2]})`
           
-          if (frameStyle === 'circle') {
+          if (patternStyle === 'circle') {
             // Draw circular modules
             styledCtx.beginPath()
             styledCtx.arc(x + moduleSize / 2, y + moduleSize / 2, radius, 0, Math.PI * 2)
             styledCtx.fill()
-          } else if (frameStyle === 'rounded') {
+          } else if (patternStyle === 'rounded') {
             // Draw rounded square modules
             styledCtx.beginPath()
             styledCtx.roundRect(x, y, moduleSize, moduleSize, radius)
@@ -202,8 +202,8 @@ export class QRCodeGenerator {
         throw new Error('QR generation returned empty result')
       }
 
-      // Apply module styling for frames
-      if (options.frame?.style && (options.frame.style === 'circle' || options.frame.style === 'rounded')) {
+      // Apply module styling for patterns
+      if (options.pattern?.style && (options.pattern.style === 'circle' || options.pattern.style === 'rounded')) {
         const tempCanvas = document.createElement('canvas')
         const tempCtx = tempCanvas.getContext('2d')
         if (tempCtx) {
@@ -214,7 +214,7 @@ export class QRCodeGenerator {
           await new Promise<void>((resolve, reject) => {
             img.onload = () => {
               tempCtx.drawImage(img, 0, 0)
-              const styledCanvas = this.applyModuleStyle(tempCanvas, options.frame?.style)
+              const styledCanvas = this.applyModuleStyle(tempCanvas, options.pattern?.style)
               dataURL = styledCanvas.toDataURL()
               resolve()
             }
