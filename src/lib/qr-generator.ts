@@ -346,9 +346,10 @@ export class QRCodeGenerator {
             const logoSize = Math.min(options.logoSize || options.size * 0.2, options.size * 0.3)
             const x = (options.size - logoSize) / 2
             const y = (options.size - logoSize) / 2
+            const logoShape = options.logoShape || 'circle'
 
-            // Small padding around logo for clearance
-            const padding = logoSize * 0.15
+            // Minimal padding around logo for clearance
+            const padding = logoSize * 0.1
             const clearSize = logoSize + (padding * 2)
             const clearX = (options.size - clearSize) / 2
             const clearY = (options.size - clearSize) / 2
@@ -358,14 +359,22 @@ export class QRCodeGenerator {
             ctx.globalCompositeOperation = 'destination-out'
             ctx.fillStyle = 'rgba(0, 0, 0, 1)'
             ctx.beginPath()
-            ctx.arc(options.size / 2, options.size / 2, clearSize / 2, 0, Math.PI * 2)
+            if (logoShape === 'circle') {
+              ctx.arc(options.size / 2, options.size / 2, clearSize / 2, 0, Math.PI * 2)
+            } else {
+              ctx.roundRect(clearX, clearY, clearSize, clearSize, clearSize * 0.15)
+            }
             ctx.fill()
             ctx.restore()
 
-            // Draw background color in cleared area (seamlessly blends with QR background)
+            // Draw background color in cleared area
             ctx.fillStyle = options.backgroundColor || '#ffffff'
             ctx.beginPath()
-            ctx.arc(options.size / 2, options.size / 2, clearSize / 2, 0, Math.PI * 2)
+            if (logoShape === 'circle') {
+              ctx.arc(options.size / 2, options.size / 2, clearSize / 2, 0, Math.PI * 2)
+            } else {
+              ctx.roundRect(clearX, clearY, clearSize, clearSize, clearSize * 0.15)
+            }
             ctx.fill()
 
             // Add subtle shadow for depth

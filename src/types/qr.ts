@@ -8,6 +8,7 @@ export interface QRCodeOptions {
   backgroundColor: string
   logoUrl?: string
   logoSize?: number
+  logoShape?: 'circle' | 'rounded'
   cornerSquareStyle: 'square' | 'dot' | 'extra-rounded'
   cornerDotStyle: 'square' | 'dot'
   pattern?: {

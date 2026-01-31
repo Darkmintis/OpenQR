@@ -291,6 +291,30 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
                       <span>80px</span>
                     </div>
                   </div>
+
+                  <div>
+                    <label className="text-sm font-medium block mb-3">Logo Shape</label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button
+                        variant={(!options.logoShape || options.logoShape === 'circle') ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => updateOptions({ logoShape: 'circle' })}
+                        className="flex flex-col items-center gap-1 h-auto py-2"
+                      >
+                        <div className="w-8 h-8 rounded-full bg-primary/20 border-2 border-primary" />
+                        <span className="text-xs">Circle</span>
+                      </Button>
+                      <Button
+                        variant={options.logoShape === 'rounded' ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => updateOptions({ logoShape: 'rounded' })}
+                        className="flex flex-col items-center gap-1 h-auto py-2"
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-primary/20 border-2 border-primary" />
+                        <span className="text-xs">Rounded</span>
+                      </Button>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
