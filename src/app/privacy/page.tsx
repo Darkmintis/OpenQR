@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Footer } from '@/components/layout/footer';
+import { Home } from 'lucide-react';
 
 export const metadata = {
   title: 'Privacy Policy | OpenQR',
@@ -62,13 +63,17 @@ export default function PrivacyPolicy() {
           <br />
           Email: <a href="mailto:contact.darkmintis@gmail.com" className="text-primary hover:underline">contact.darkmintis@gmail.com</a>
         </p>
-
-        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-          <Link href="/" className="text-primary hover:underline">
-            ← Back to Home
-          </Link>
-        </div>
       </div>
+
+      {/* Floating Home Button */}
+      <Link 
+        href="/" 
+        className="fixed bottom-6 right-6 w-12 h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 z-50"
+        aria-label="Go to home page"
+      >
+        <Home className="w-5 h-5" />
+      </Link>
+
       <Footer />
     </div>
   )
