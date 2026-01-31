@@ -37,18 +37,3 @@ export function formatNumber(num: number): string {
   }
   return num.toString()
 }
-
-// Secure hash function for password protection
-export async function sha256(message: string): Promise<string> {
-  // Encode the message as UTF-8
-  const msgBuffer = new TextEncoder().encode(message)
-  
-  // Hash the message with SHA-256
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer)
-  
-  // Convert the hash to a hexadecimal string
-  const hashArray = Array.from(new Uint8Array(hashBuffer))
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
-  
-  return hashHex
-}
