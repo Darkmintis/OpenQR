@@ -85,9 +85,11 @@ export class QRCodeGenerator {
     const capacities = capacityTable[errorLevel][mode]
     
     // Find the minimum version that can contain the text
+    // Add 1 to the result as buffer since library is more conservative
     for (let i = 0; i < capacities.length; i++) {
       if (textLength <= capacities[i]) {
-        return i + 1 // Version is 1-indexed
+        // Add 1 version as safety margin since library calculations can differ
+        return Math.min(i + 2, 40) // Version is 1-indexed, add 1 for safety
       }
     }
     
@@ -130,9 +132,20 @@ export class QRCodeGenerator {
       qrOptions.version = minRequiredVersion
     }
 
+    console.log('QR Generation:', { 
+      textLength: options.text.length, 
+      minVersion: minRequiredVersion, 
+      selectedVersion: qrOptions.version,
+      errorLevel: options.errorCorrectionLevel 
+    })
+
     try {
       // Generate QR code as data URL
       const dataURL = await QRCodeLib.toDataURL(options.text, qrOptions as unknown as QRLibOptions)
+      
+      if (!dataURL) {
+        throw new Error('QR generation returned empty result')
+      }
       
       // If no gradient is set, return the basic QR code
       if (!options.gradient) {
@@ -197,8 +210,21 @@ export class QRCodeGenerator {
       } else {
         return dataURL
       }
-    } catch {
-      throw new Error('Failed to generate QR code')
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to generate QR code'
+      
+      // If in auto mode and library says version is too small, retry with higher version
+      if (!options.version && errorMessage.includes('Minimum version required')) {
+        const versionMatch = /Minimum version required.*?(\d+)/.exec(errorMessage)
+        if (versionMatch) {
+          const requiredVersion = Number.parseInt(versionMatch[1], 10)
+          console.log(`Auto-retry with version ${requiredVersion} (library-suggested)`)
+          // Retry with the library's suggested version
+          return this.generateQRCode({ ...options, version: requiredVersion })
+        }
+      }
+      
+      throw new Error(errorMessage)
     }
   }
 
