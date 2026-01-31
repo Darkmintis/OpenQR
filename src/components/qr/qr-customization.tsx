@@ -175,14 +175,14 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
                     id="qr-size"
                     type="range"
                     min="100"
-                    max="800"
+                    max="500"
                     value={options.size}
                     onChange={(e) => updateOptions({ size: Number.parseInt(e.target.value) })}
                     className="w-full"
                   />
                   <div className="flex justify-between text-xs text-muted-foreground mt-1">
                     <span>100px</span>
-                    <span>800px</span>
+                    <span>500px</span>
                   </div>
                 </div>
 
