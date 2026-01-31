@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Footer } from '@/components/layout/footer';
 import { Home } from 'lucide-react';
 
 export const metadata = {
@@ -73,8 +72,6 @@ export default function PrivacyPolicy() {
       >
         <Home className="w-5 h-5" />
       </Link>
-
-      <Footer />
     </div>
   )
 }
