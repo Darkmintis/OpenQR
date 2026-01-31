@@ -228,55 +228,69 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
 
           {activeTab === 'logo' && (
             <div className="space-y-4">
-              <div>
-                <label htmlFor="logo-upload" className="text-sm font-medium block mb-2">Upload Logo</label>
-                <Input
-                  id="logo-upload"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleLogoUpload}
-                  className="cursor-pointer"
-                />
-                <p className="text-xs text-muted-foreground mt-1">
-                  Upload a logo to place in the center of your QR code
-                </p>
-              </div>
-
-              {options.logoUrl && (
-                <div>
-                  <label htmlFor="logo-size" className="text-sm font-medium block mb-2">Logo Size</label>
+              {!options.logoUrl ? (
+                <div className="flex flex-col items-center justify-center p-8 border-2 border-dashed border-border rounded-lg hover:border-primary transition-colors">
+                  <ImageIcon className="w-12 h-12 text-muted-foreground mb-3" />
                   <Input
-                    id="logo-size"
-                    type="range"
-                    min="20"
-                    max={options.size * 0.4}
-                    value={options.logoSize || options.size * 0.2}
-                    onChange={(e) => updateOptions({ logoSize: Number.parseInt(e.target.value) })}
-                    className="w-full"
+                    id="logo-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleLogoUpload}
+                    className="hidden"
                   />
-                  <div className="text-center text-sm text-muted-foreground mt-1">
-                    {options.logoSize || Math.round(options.size * 0.2)}px
-                  </div>
-                </div>
-              )}
-
-              {options.logoUrl && (
-                <div className="text-center">
-                  <Image
-                    src={options.logoUrl}
-                    alt="Logo preview"
-                    width={64}
-                    height={64}
-                    className="w-16 h-16 object-contain border rounded mx-auto"
-                  />
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => updateOptions({ logoUrl: undefined, logoSize: undefined })}
-                    className="mt-2"
+                  <Button 
+                    variant="default" 
+                    size="sm" 
+                    className="mb-2"
+                    onClick={() => document.getElementById('logo-upload')?.click()}
                   >
-                    Remove Logo
+                    Choose Logo File
                   </Button>
+                  <p className="text-xs text-muted-foreground text-center">
+                    Upload a logo to embed in your QR code<br />
+                    PNG, JPG, or SVG (max 5MB)
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex flex-col items-center p-4 border rounded-lg bg-muted/30">
+                    <Image
+                      src={options.logoUrl}
+                      alt="Logo preview"
+                      width={80}
+                      height={80}
+                      className="w-20 h-20 object-contain mb-3"
+                    />
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => updateOptions({ logoUrl: undefined, logoSize: undefined })}
+                    >
+                      Remove Logo
+                    </Button>
+                  </div>
+
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <label htmlFor="logo-size" className="text-sm font-medium">Logo Size</label>
+                      <span className="text-sm font-semibold text-primary">
+                        {options.logoSize || Math.round(options.size * 0.2)}px
+                      </span>
+                    </div>
+                    <Input
+                      id="logo-size"
+                      type="range"
+                      min="20"
+                      max="80"
+                      value={options.logoSize || options.size * 0.2}
+                      onChange={(e) => updateOptions({ logoSize: Number.parseInt(e.target.value) })}
+                      className="w-full"
+                    />
+                    <div className="flex justify-between text-xs text-muted-foreground mt-1">
+                      <span>20px</span>
+                      <span>80px</span>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>

@@ -347,29 +347,37 @@ export class QRCodeGenerator {
             const x = (options.size - logoSize) / 2
             const y = (options.size - logoSize) / 2
 
-            // Create proper space for logo with better padding
+            // Small padding around logo for clearance
             const padding = logoSize * 0.15
-            const bgSize = logoSize + (padding * 2)
-            const bgX = (options.size - bgSize) / 2
-            const bgY = (options.size - bgSize) / 2
-            const cornerRadius = bgSize * 0.15
+            const clearSize = logoSize + (padding * 2)
+            const clearX = (options.size - clearSize) / 2
+            const clearY = (options.size - clearSize) / 2
 
-            // Draw rounded white background for logo
+            // CLEAR the QR pattern area for logo
+            ctx.save()
+            ctx.globalCompositeOperation = 'destination-out'
+            ctx.fillStyle = 'rgba(0, 0, 0, 1)'
+            ctx.beginPath()
+            ctx.arc(options.size / 2, options.size / 2, clearSize / 2, 0, Math.PI * 2)
+            ctx.fill()
+            ctx.restore()
+
+            // Draw background color in cleared area (seamlessly blends with QR background)
             ctx.fillStyle = options.backgroundColor || '#ffffff'
             ctx.beginPath()
-            ctx.roundRect(bgX, bgY, bgSize, bgSize, cornerRadius)
+            ctx.arc(options.size / 2, options.size / 2, clearSize / 2, 0, Math.PI * 2)
             ctx.fill()
 
             // Add subtle shadow for depth
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.1)'
-            ctx.shadowBlur = 8
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.15)'
+            ctx.shadowBlur = 10
             ctx.shadowOffsetX = 0
             ctx.shadowOffsetY = 2
 
             // Draw logo with rounded corners
             ctx.save()
             ctx.beginPath()
-            ctx.roundRect(x, y, logoSize, logoSize, logoSize * 0.1)
+            ctx.roundRect(x, y, logoSize, logoSize, logoSize * 0.12)
             ctx.clip()
             ctx.drawImage(logo, x, y, logoSize, logoSize)
             ctx.restore()
