@@ -8,7 +8,7 @@ export default function HomePage() {
     <main className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 flex flex-col">
       <Header />
       <Hero />
-      <div id="generator" className="container mx-auto px-4 py-4 flex-1">
+      <div id="generator" className="container mx-auto px-4 py-4 flex-1 min-h-[600px]">
         <QRGenerator />
       </div>
       <Footer />
