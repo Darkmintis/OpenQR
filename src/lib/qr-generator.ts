@@ -116,7 +116,7 @@ export class QRCodeGenerator {
     const styledCtx = styledCanvas.getContext('2d')
     if (!styledCtx) return canvas
 
-    // Fill background
+    // Fill background - sample from top-left corner
     const bgColor = ctx.getImageData(0, 0, 1, 1).data
     styledCtx.fillStyle = `rgb(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]})`
     styledCtx.fillRect(0, 0, canvas.width, canvas.height)
@@ -125,14 +125,26 @@ export class QRCodeGenerator {
     const moduleSize = Math.floor(canvas.width / 45) // Rough estimate for QR modules
     const radius = patternStyle === 'circle' ? moduleSize / 2 : moduleSize / 4
 
+    // Helper function to check if a color is different from background
+    const isDifferentFromBg = (r: number, g: number, b: number): boolean => {
+      const threshold = 30 // Tolerance for color difference
+      const dr = Math.abs(r - bgColor[0])
+      const dg = Math.abs(g - bgColor[1])
+      const db = Math.abs(b - bgColor[2])
+      return (dr + dg + db) > threshold
+    }
+
     // Draw styled modules
     for (let y = 0; y < canvas.height; y += moduleSize) {
       for (let x = 0; x < canvas.width; x += moduleSize) {
         const i = (y * canvas.width + x) * 4
-        const isDark = data[i] < 128 // Check if pixel is dark
+        const r = data[i]
+        const g = data[i + 1]
+        const b = data[i + 2]
         
-        if (isDark) {
-          styledCtx.fillStyle = `rgb(${data[i]}, ${data[i + 1]}, ${data[i + 2]})`
+        // Check if this pixel is different from background (i.e., it's a foreground module)
+        if (isDifferentFromBg(r, g, b)) {
+          styledCtx.fillStyle = `rgb(${r}, ${g}, ${b})`
           
           if (patternStyle === 'circle') {
             // Draw circular modules
