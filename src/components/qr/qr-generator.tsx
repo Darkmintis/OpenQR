@@ -62,11 +62,6 @@ export function QRGenerator() {
         )
         setCapacityUsage(usage)
 
-        // Check if data might exceed capacity (warning at 95%)
-        if (usage > 95 && !qrOptions.version) {
-          setErrorMessage('Content size approaching maximum capacity. Consider using a lower error correction level or setting a higher version.')
-        }
-
         const updatedOptions = { ...qrOptions, text: qrText }
 
         let dataURL: string
