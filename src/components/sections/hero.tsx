@@ -1,7 +1,5 @@
 'use client'
 
-import { Sparkles, Zap, Shield } from 'lucide-react'
-
 export function Hero() {
   return (
     <section className="py-12 px-4">
