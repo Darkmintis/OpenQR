@@ -111,9 +111,10 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
 
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <div>
-                  <label className="text-sm font-medium block mb-2">Foreground Color</label>
+                  <label htmlFor="fg-color" className="text-sm font-medium block mb-2">Foreground Color</label>
                   <div className="flex gap-2">
                     <Input
+                      id="fg-color"
                       type="color"
                       value={options.foregroundColor}
                       onChange={(e) => updateOptions({ foregroundColor: e.target.value })}
@@ -129,9 +130,10 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium block mb-2">Background Color</label>
+                  <label htmlFor="bg-color" className="text-sm font-medium block mb-2">Background Color</label>
                   <div className="flex gap-2">
                     <Input
+                      id="bg-color"
                       type="color"
                       value={options.backgroundColor}
                       onChange={(e) => updateOptions({ backgroundColor: e.target.value })}
@@ -164,8 +166,9 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium block mb-2">Size (px)</label>
+                  <label htmlFor="qr-size" className="text-sm font-medium block mb-2">Size (px)</label>
                   <Input
+                    id="qr-size"
                     type="range"
                     min="100"
                     max="800"
@@ -179,8 +182,9 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium block mb-2">Margin</label>
+                  <label htmlFor="qr-margin" className="text-sm font-medium block mb-2">Margin</label>
                   <Input
+                    id="qr-margin"
                     type="range"
                     min="0"
                     max="10"
@@ -195,8 +199,9 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
               </div>
 
               <div>
-                <label className="text-sm font-medium block mb-2">Error Correction Level</label>
+                <label htmlFor="error-correction" className="text-sm font-medium block mb-2">Error Correction Level</label>
                 <select
+                  id="error-correction"
                   value={options.errorCorrectionLevel}
                   onChange={(e) => updateOptions({ 
                     errorCorrectionLevel: e.target.value as 'L' | 'M' | 'Q' | 'H' 
@@ -215,8 +220,9 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
           {activeTab === 'logo' && (
             <div className="space-y-4">
               <div>
-                <label className="text-sm font-medium block mb-2">Upload Logo</label>
+                <label htmlFor="logo-upload" className="text-sm font-medium block mb-2">Upload Logo</label>
                 <Input
+                  id="logo-upload"
                   type="file"
                   accept="image/*"
                   onChange={handleLogoUpload}
@@ -229,8 +235,9 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
 
               {options.logoUrl && (
                 <div>
-                  <label className="text-sm font-medium block mb-2">Logo Size</label>
+                  <label htmlFor="logo-size" className="text-sm font-medium block mb-2">Logo Size</label>
                   <Input
+                    id="logo-size"
                     type="range"
                     min="20"
                     max={options.size * 0.4}
@@ -269,7 +276,7 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
           {activeTab === 'frame' && (
             <div className="space-y-4">
               <div>
-                <label className="text-sm font-medium block mb-2">Frame Style</label>
+                <div className="text-sm font-medium block mb-2">Frame Style</div>
                 <div className="grid grid-cols-2 gap-2">
                   {['none', 'square', 'rounded', 'circle'].map((style) => (
                     <Button
@@ -294,8 +301,9 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
               {options.frame && (
                 <>
                   <div>
-                    <label className="text-sm font-medium block mb-2">Frame Color</label>
+                    <label htmlFor="frame-color" className="text-sm font-medium block mb-2">Frame Color</label>
                     <Input
+                      id="frame-color"
                       type="color"
                       value={options.frame.color}
                       onChange={(e) => updateOptions({
@@ -306,8 +314,9 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium block mb-2">Frame Text (Optional)</label>
+                    <label htmlFor="frame-text" className="text-sm font-medium block mb-2">Frame Text (Optional)</label>
                     <Input
+                      id="frame-text"
                       type="text"
                       value={options.frame.text || ''}
                       onChange={(e) => updateOptions({
@@ -319,8 +328,9 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
 
                   {options.frame.text && (
                     <div>
-                      <label className="text-sm font-medium block mb-2">Text Color</label>
+                      <label htmlFor="frame-text-color" className="text-sm font-medium block mb-2">Text Color</label>
                       <Input
+                        id="frame-text-color"
                         type="color"
                         value={options.frame.textColor || '#000000'}
                         onChange={(e) => updateOptions({
