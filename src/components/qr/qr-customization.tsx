@@ -300,21 +300,21 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
                     <div className="flex items-center justify-between mb-3">
                       <label htmlFor="logo-size" className="text-sm font-medium">Logo Size</label>
                       <span className="text-sm font-semibold text-primary">
-                        {options.logoSize || Math.round(options.size * 0.2)}px
+                        {options.logoSize || Math.round(options.size * 0.15)}px
                       </span>
                     </div>
                     <Input
                       id="logo-size"
                       type="range"
-                      min="20"
-                      max="80"
-                      value={options.logoSize || options.size * 0.2}
+                      min={Math.round(options.size * 0.08)}
+                      max={Math.round(options.size * 0.25)}
+                      value={options.logoSize || options.size * 0.15}
                       onChange={(e) => updateOptions({ logoSize: Number.parseInt(e.target.value) })}
                       className="w-full"
                     />
                     <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                      <span>20px</span>
-                      <span>80px</span>
+                      <span>{Math.round(options.size * 0.08)}px</span>
+                      <span>{Math.round(options.size * 0.25)}px</span>
                     </div>
                   </div>
                 </div>
