@@ -16,22 +16,6 @@ export function Hero() {
             </span>
           </h1>
 
-          {/* Features List */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 max-w-2xl mx-auto">
-            <div className="flex items-center justify-center gap-2 text-sm">
-              <Zap className="w-4 h-4 text-yellow-500" />
-              <span>Lightning Fast</span>
-            </div>
-            <div className="flex items-center justify-center gap-2 text-sm">
-              <Shield className="w-4 h-4 text-green-500" />
-              <span>Privacy First</span>
-            </div>
-            <div className="flex items-center justify-center gap-2 text-sm">
-              <Sparkles className="w-4 h-4 text-purple-500" />
-              <span>Exclusive Features</span>
-            </div>
-          </div>
-
         </div>
       </div>
     </section>
