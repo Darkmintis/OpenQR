@@ -22,16 +22,6 @@ export interface QRCodeOptions {
     text?: string
     textColor?: string
   }
-  // Advanced features
-  smartConditions?: {
-    enabled: boolean
-    type: string
-    conditions: Record<string, unknown>
-  }
-  password?: {
-    enabled: boolean
-    hash: string
-  }
 }
 
 export interface QRTemplate {

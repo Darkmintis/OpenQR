@@ -16,10 +16,6 @@
 - Frame options with custom text
 - Advanced error correction levels
 
-### Advanced Features
-- Smart conditional QR codes (time, location, language)
-- Password-protected QR codes
-
 ## Getting Started
 
 ### Prerequisites
@@ -76,8 +72,6 @@ OpenQR/
 │   ├── lib/                  # Utility functions
 │   └── types/                # TypeScript definitions
 └── public/                   # Static assets
-    ├── protect.html          # Password protection page
-    └── smart.html            # Smart conditions handler
 ```
 
 ## Deployment
@@ -112,8 +106,7 @@ OpenQR is designed with privacy in mind:
 
 - All QR code generation happens entirely in your browser
 - No data is sent to any servers
-- Password-protected QR codes use client-side encryption
-- Smart QR code conditions are processed locally
+- All processing is done locally on your device
 
 For more details, please see our [Privacy Policy](/privacy) and [Terms of Service](/terms).
 

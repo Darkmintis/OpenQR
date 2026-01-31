@@ -25,8 +25,7 @@ export default function TermsOfService() {
         <h2 className="text-2xl font-semibold mt-8 mb-4">Description of Service</h2>
         <p>
           OpenQR is an open-source client-side QR code generator that provides various customization options including colors, patterns, 
-          logos, and advanced features like password protection and smart conditions. All processing occurs locally in your browser, 
-          and we do not collect or store any of your data on servers.
+          and logos. All processing occurs locally in your browser, and we do not collect or store any of your data on servers.
         </p>
 
         <h2 className="text-2xl font-semibold mt-8 mb-4">Use of the Service</h2>

@@ -87,11 +87,10 @@ jobs:
           echo "- ✅ README.md" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 🎨 Features Deployed" >> $GITHUB_STEP_SUMMARY
-          echo "- 🎯 15+ QR code types" >> $GITHUB_STEP_SUMMARY
-          echo "- 🎨 Advanced customization" >> $GITHUB_STEP_SUMMARY
-          echo "- � Password protection" >> $GITHUB_STEP_SUMMARY
-          echo "- 🧠 Smart conditional QR codes" >> $GITHUB_STEP_SUMMARY
-          echo "- 📊 Analytics tracking" >> $GITHUB_STEP_SUMMARY
-          echo "- � Bulk generation" >> $GITHUB_STEP_SUMMARY
+          echo "- 🎯 Multiple QR code customization options" >> $GITHUB_STEP_SUMMARY
+          echo "- 🎨 Colors, gradients, and patterns" >> $GITHUB_STEP_SUMMARY
+          echo "- 🖼️ Logo integration" >> $GITHUB_STEP_SUMMARY
+          echo "- 🖌️ Custom frames with text" >> $GITHUB_STEP_SUMMARY
+
 
 
