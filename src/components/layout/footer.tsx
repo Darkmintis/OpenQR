@@ -4,10 +4,19 @@ import { DonationDialog } from './donation-dialog'
 export function Footer() {
   return (
     <footer className="bg-background border-t">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row justify-between items-center">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-2">
           <p className="text-sm text-muted-foreground">
-            © 2025 OpenQR. Built by{' '}
+            © 2025{' '}
+            <a 
+              href="https://darkmintis.dev/openqr/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="font-medium hover:text-foreground transition-colors"
+            >
+              OpenQR
+            </a>
+            . Built by{' '}
             <a 
               href="https://github.com/Darkmintis" 
               target="_blank" 
@@ -17,14 +26,14 @@ export function Footer() {
               Darkmintis
             </a>
           </p>
-          <div className="flex items-center space-x-4 mt-4 md:mt-0">
+          <div className="flex items-center space-x-3">
             <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Privacy Policy
+              Privacy
             </Link>
             <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Terms of Service
+              Terms
             </Link>
-            <div className="ml-4" style={{ position: 'relative' }}>
+            <div className="ml-2" style={{ position: 'relative' }}>
               <DonationDialog />
             </div>
           </div>

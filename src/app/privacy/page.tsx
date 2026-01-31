@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Footer } from '@/components/layout/footer';
 
 export const metadata = {
   title: 'Privacy Policy | OpenQR',
@@ -59,7 +60,7 @@ export default function PrivacyPolicy() {
         <p>
           If you have any questions or concerns about this Privacy Policy, please contact us at:
           <br />
-          Email: <a href="mailto:dipesh.mahat.dev@gmail.com" className="text-primary hover:underline">dipesh.mahat.dev@gmail.com</a>
+          Email: <a href="mailto:contact.darkmintis@gmail.com" className="text-primary hover:underline">contact.darkmintis@gmail.com</a>
         </p>
 
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
@@ -68,6 +69,7 @@ export default function PrivacyPolicy() {
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
