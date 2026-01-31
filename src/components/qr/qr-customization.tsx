@@ -253,21 +253,47 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <div className="flex flex-col items-center p-4 border rounded-lg bg-muted/30">
+                  <div className="flex items-start gap-3 p-4 border rounded-lg bg-muted/30">
                     <Image
                       src={options.logoUrl}
                       alt="Logo preview"
-                      width={80}
-                      height={80}
-                      className="w-20 h-20 object-contain mb-3"
+                      width={100}
+                      height={100}
+                      className="w-24 h-24 object-contain"
                     />
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => updateOptions({ logoUrl: undefined, logoSize: undefined })}
-                    >
-                      Remove Logo
-                    </Button>
+                    <div className="flex-1 space-y-2">
+                      <div>
+                        <label className="text-xs font-medium block mb-2">Shape</label>
+                        <div className="flex gap-2">
+                          <Button
+                            variant={(!options.logoShape || options.logoShape === 'circle') ? 'default' : 'outline'}
+                            size="sm"
+                            onClick={() => updateOptions({ logoShape: 'circle' })}
+                            className="flex-1 flex flex-col items-center gap-1 h-auto py-1.5"
+                          >
+                            <div className={`w-5 h-5 rounded-full border-2 ${(!options.logoShape || options.logoShape === 'circle') ? 'bg-white border-white' : 'bg-primary/20 border-primary'}`} />
+                            <span className="text-xs">Circle</span>
+                          </Button>
+                          <Button
+                            variant={options.logoShape === 'rounded' ? 'default' : 'outline'}
+                            size="sm"
+                            onClick={() => updateOptions({ logoShape: 'rounded' })}
+                            className="flex-1 flex flex-col items-center gap-1 h-auto py-1.5"
+                          >
+                            <div className={`w-5 h-5 rounded border-2 ${options.logoShape === 'rounded' ? 'bg-white border-white' : 'bg-primary/20 border-primary'}`} />
+                            <span className="text-xs">Rounded</span>
+                          </Button>
+                        </div>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => updateOptions({ logoUrl: undefined, logoSize: undefined })}
+                        className="w-full"
+                      >
+                        Remove Logo
+                      </Button>
+                    </div>
                   </div>
 
                   <div>
@@ -289,30 +315,6 @@ export function QRCustomization({ options, onChange }: QRCustomizationProps) {
                     <div className="flex justify-between text-xs text-muted-foreground mt-1">
                       <span>20px</span>
                       <span>80px</span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-medium block mb-3">Logo Shape</label>
-                    <div className="grid grid-cols-2 gap-2">
-                      <Button
-                        variant={(!options.logoShape || options.logoShape === 'circle') ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => updateOptions({ logoShape: 'circle' })}
-                        className="flex flex-col items-center gap-1 h-auto py-2"
-                      >
-                        <div className="w-8 h-8 rounded-full bg-primary/20 border-2 border-primary" />
-                        <span className="text-xs">Circle</span>
-                      </Button>
-                      <Button
-                        variant={options.logoShape === 'rounded' ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => updateOptions({ logoShape: 'rounded' })}
-                        className="flex flex-col items-center gap-1 h-auto py-2"
-                      >
-                        <div className="w-8 h-8 rounded-lg bg-primary/20 border-2 border-primary" />
-                        <span className="text-xs">Rounded</span>
-                      </Button>
                     </div>
                   </div>
                 </div>
