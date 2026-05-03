@@ -60,7 +60,7 @@ export default function PrivacyPolicy() {
         <p>
           If you have any questions or concerns about this Privacy Policy, please contact us at:
           <br />
-          Email: <a href="mailto:contact.darkmintis@gmail.com" className="text-primary hover:underline">contact.darkmintis@gmail.com</a>
+          Email: <a href="mailto:contact@darkmintis.dev" className="text-primary hover:underline">contact@darkmintis.dev</a>
         </p>
       </div>
 
