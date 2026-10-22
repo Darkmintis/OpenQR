@@ -4,6 +4,7 @@ import { Home } from 'lucide-react';
 export const metadata = {
   title: 'Terms of Service | OpenQR',
   description: 'Terms of service for OpenQR - A client-side QR code generator',
+  alternates: { canonical: 'https://darkmintis.dev/openqr/terms/' },
 }
 
 export default function TermsOfService() {

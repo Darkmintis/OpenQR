@@ -10,16 +10,19 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://darkmintis.dev/openqr'),
+  metadataBase: new URL('https://darkmintis.dev'),
   title: 'OpenQR - The Best QR Code Generator',
   description: 'Create beautiful, customizable QR codes instantly. Free, open-source, and feature-rich QR code generator.',
+  alternates: {
+    canonical: 'https://darkmintis.dev/openqr/',
+  },
   keywords: ['QR code', 'QR generator', 'custom QR', 'beautiful QR', 'best QR generator', 'open source'],
   authors: [{ name: 'Darkmintis' }],
   creator: 'Darkmintis',
   openGraph: {
     title: 'OpenQR - The Best QR Code Generator',
     description: 'Create beautiful, customizable QR codes instantly.',
-    url: 'https://darkmintis.dev/openqr',
+    url: 'https://darkmintis.dev/openqr/',
     siteName: 'OpenQR',
     locale: 'en_US',
     type: 'website',

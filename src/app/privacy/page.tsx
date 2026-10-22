@@ -4,6 +4,7 @@ import { Home } from 'lucide-react';
 export const metadata = {
   title: 'Privacy Policy | OpenQR',
   description: 'Privacy policy for OpenQR - A client-side QR code generator',
+  alternates: { canonical: 'https://darkmintis.dev/openqr/privacy/' },
 }
 
 export default function PrivacyPolicy() {
